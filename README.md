@@ -4,7 +4,7 @@
 
 Spacer is a native **macOS disk usage analyzer and folder size viewer**. It shows available storage, sorts files and folders by size, and visualizes the current folder and its subfolders in a two-level circular chart. Use it to answer “What is taking up space on my Mac?” and review potential cleanup candidates before moving selected items to Trash.
 
-**[Download the ready-to-run DMG](https://github.com/cnc-club/MacOS-Spacer/releases/latest)** · [How to run](#run-the-ready-made-app--no-build-required) · [MIT license](LICENSE)
+**Ready-to-run DMG:** built and verified; the public release attachment is pending upload. · [How to run](#run-the-ready-made-app--no-build-required) · [MIT license](LICENSE)
 
 No subscription, ads, account or file-list uploads. Spacer works locally on your Mac. It does not delete anything automatically.
 
@@ -20,7 +20,7 @@ No subscription, ads, account or file-list uploads. Spacer works locally on your
 | Technology | Native Swift and SwiftUI |
 | Privacy | Local analysis; no account or server required |
 
-![Spacer free disk space display and folder navigation on macOS](docs/screenshots/disk-usage.png)
+![Spacer disk usage overview](docs/screenshots/overview.png)
 
 ## Features
 
@@ -35,15 +35,7 @@ No subscription, ads, account or file-list uploads. Spacer works locally on your
 
 ## Screenshots
 
-Real app captures with sample files. The surrounding area is transparent PNG; the interface and text have not been regenerated.
-
-### Folder sizes and clickable navigation
-
-![Spacer macOS folder size viewer with clickable path navigation](docs/screenshots/folder-navigation.png)
-
-### Review cleanup suggestions
-
-![Spacer cleanup suggestions for old installers and archives in Downloads](docs/screenshots/cleanup-suggestions.png)
+Three additional transparent PNG captures have been prepared with sample files: disk usage, folder navigation and cleanup suggestions. Their repository upload is pending. The interface and text are preserved without AI redrawing.
 
 ## Run the ready-made app — no build required
 
