@@ -1,7 +1,25 @@
 import SwiftUI
 import AppKit
+import Darwin
 
 @main struct SpacerApp: App {
+    init() {
+        if CommandLine.arguments.contains("--verify-bundle") {
+            let resources = Bundle.main.resourceURL
+            let expected = resources?.appendingPathComponent("Spacer_Spacer.bundle")
+            let packaged = expected.flatMap { Bundle(path: $0.path) }
+            let en = packaged?.path(forResource: "en", ofType: "lproj").flatMap(Bundle.init(path:))
+            let ru = packaged?.path(forResource: "ru", ofType: "lproj").flatMap(Bundle.init(path:))
+            let valid = Bundle.main.bundleURL.pathExtension == "app"
+                && packaged != nil
+                && Localization.resourceBundle.bundleURL == packaged?.bundleURL
+                && en?.localizedString(forKey: "Language", value: nil, table: nil) == "Language"
+                && ru?.localizedString(forKey: "Language", value: nil, table: nil) == "Язык"
+                && resources.map { FileManager.default.fileExists(atPath: $0.appendingPathComponent("LICENSE.txt").path) } == true
+            print(valid ? "PASS: standalone app, bundled English/Russian resources and MIT license" : "FAIL: app resources are missing or depend on the build folder")
+            exit(valid ? 0 : 1)
+        }
+    }
     var body: some Scene { WindowGroup { ContentView().frame(minWidth: 1200, minHeight: 680) } }
 }
 
