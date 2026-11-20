@@ -1,10 +1,26 @@
-# Spacer
+# Spacer — Free macOS Disk Space Analyzer
 
-**A simple, free utility for checking disk space on macOS.**
+**A simple, free, open-source utility for checking free disk space and finding large folders on a Mac.**
 
-See how much space is free, find what takes up room, and explore your folders with a two-level disk usage chart. Spacer runs locally, has no subscriptions or ads, and never sends your file list to a server.
+Spacer is a native **macOS disk usage analyzer and folder size viewer**. It shows available storage, sorts files and folders by size, and visualizes the current folder and its subfolders in a two-level circular chart. Use it to answer “What is taking up space on my Mac?” and review potential cleanup candidates before moving selected items to Trash.
 
-![Spacer disk overview](docs/screenshots/overview.png)
+**[Download the ready-to-run DMG](https://github.com/cnc-club/MacOS-Spacer/releases/latest)** · [How to run](#run-the-ready-made-app--no-build-required) · [MIT license](LICENSE)
+
+No subscription, ads, account or file-list uploads. Spacer works locally on your Mac. It does not delete anything automatically.
+
+| Quick facts | |
+| --- | --- |
+| App name | Spacer; repository name: MacOS-Spacer |
+| Purpose | Check free disk space, inspect folder sizes and visualize disk usage on macOS |
+| Price | Free; no subscription |
+| License | MIT, free and open-source software |
+| Ready-made download | One DMG for Apple Silicon (M1 or later), macOS 13+ |
+| Installation | Run directly from the DMG, or copy Spacer.app to any folder |
+| Languages | English and Russian |
+| Technology | Native Swift and SwiftUI |
+| Privacy | Local analysis; no account or server required |
+
+![Spacer free disk space display and folder navigation on macOS](docs/screenshots/disk-usage.png)
 
 ## Features
 
@@ -17,9 +33,27 @@ See how much space is free, find what takes up room, and explore your folders wi
 - English by default, with Russian available from the language menu.
 - Selected items move to macOS Trash only after confirmation. Nothing is automatically deleted.
 
-## Install
+## Screenshots
 
-Requirements: **macOS 13 or later** and **Apple Command Line Tools with Swift 5.9 or later**. The steps below build an app for your Mac’s architecture; a prebuilt, notarized installer is not currently provided.
+Real app captures with sample files. The surrounding area is transparent PNG; the interface and text have not been regenerated.
+
+### Folder sizes and clickable navigation
+
+![Spacer macOS folder size viewer with clickable path navigation](docs/screenshots/folder-navigation.png)
+
+### Review cleanup suggestions
+
+![Spacer cleanup suggestions for old installers and archives in Downloads](docs/screenshots/cleanup-suggestions.png)
+
+## Run the ready-made app — no build required
+
+Open the supplied **Spacer-0.2.0-macOS-arm64.dmg**, then double-click **Spacer.app** inside it. The app runs directly from the disk image; you do not need Swift, Xcode, Terminal or an installation step. You can also copy it to Applications or another folder and run it there.
+
+This DMG is for **Apple Silicon (M1 or later), macOS 13+**. English, Russian and the MIT license are bundled in the app. It is locally signed but not Apple-notarized, so macOS may ask you to approve opening it. Copy it to a stable location before granting Full Disk Access. Quit Spacer before ejecting the image.
+
+## Build from source
+
+Requirements: **macOS 13 or later** and **Apple Command Line Tools with Swift 5.9 or later**. These steps build an app for your Mac’s architecture.
 
 1. Download this repository, or clone it:
 
@@ -31,7 +65,7 @@ Requirements: **macOS 13 or later** and **Apple Command Line Tools with Swift 5.
 3. Build the application:
 
    ```sh
-   chmod +x build-app.sh check.sh
+   chmod +x build-app.sh check.sh package-dmg.sh
    ./build-app.sh
    ```
 
@@ -50,6 +84,18 @@ For a faster development build:
 
 ```sh
 ./build-app.sh debug
+```
+
+To create a single compressed disk image for your Mac:
+
+```sh
+./package-dmg.sh
+```
+
+The image and its SHA-256 checksum are written to `dist/`. A packaged app can verify its language resources without relying on the source directory:
+
+```sh
+dist/Spacer.app/Contents/MacOS/Spacer --verify-bundle
 ```
 
 ### Access to protected folders
@@ -85,6 +131,36 @@ Deletion is intentionally limited to eligible items inside your home folder. Sta
 Sizes are logical file sizes. APFS clones, hard links, compression, cloud placeholders and snapshots can make actual disk usage or recovered space different. Symlinks are not traversed. App packages and libraries are shown as single objects. A scan from `/` excludes `/dev` and `/System/Volumes` to avoid device traversal and counting the same data volume twice; explicit scans of individual folders are still available. These exclusions and access errors are counted separately.
 
 Background: [Apple storage management](https://support.apple.com/guide/mac-help/change-storage-settings-mchl3d437fbc/mac), [cache directories](https://developer.apple.com/documentation/foundation/using-the-file-system-effectively), and [freeing disk space](https://support.apple.com/en-sg/102624).
+
+## Frequently asked questions
+
+### How do I see what is taking up space on my Mac?
+
+Open Spacer, choose a folder or click **Scan disk**, and wait for sizes to finish calculating. The file list is sorted by size. The inner chart ring shows the current folder’s contents; the outer ring shows one more level. Click a folder or chart sector to explore it.
+
+### Is Spacer a free disk analyzer for macOS?
+
+Yes. Spacer is free and open source under the MIT license. It includes free-space reporting, a folder size viewer, a disk usage chart and reviewable cleanup suggestions, with no subscription or account.
+
+### Do I need to compile Spacer or install Xcode?
+
+No, when using the ready-made DMG. Open the image and launch **Spacer.app** directly. Xcode Command Line Tools are needed only to build the source code yourself.
+
+### Does Spacer clean my Mac automatically?
+
+No. Spacer helps you inspect disk usage and review possible cleanup candidates. Only items you select are moved to Trash, and only after confirmation. The app does not empty Trash, find duplicates or claim to identify every unnecessary file.
+
+### Why are folder sizes different from the Mac’s free-space display?
+
+Free space is reported by the filesystem for the selected volume. Folder totals are logical file sizes. APFS snapshots, clones, compression, hard links, inaccessible folders and cloud files can make these numbers differ. A full-disk scan is not a physical block accounting tool.
+
+### Can Spacer replace a paid disk space visualizer?
+
+Spacer provides a lightweight free option for browsing folder sizes and a two-level circular disk usage view. It focuses on transparent, manual review rather than automatic system cleaning or a subscription-based cleanup suite.
+
+### Which Macs can run Spacer?
+
+The ready-made DMG is for Apple Silicon Macs with macOS 13 or later. Source builds target the architecture of the Mac used to build them; an Intel DMG is not currently provided.
 
 ## Contributing and localization
 
